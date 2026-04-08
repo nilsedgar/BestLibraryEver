@@ -26,13 +26,13 @@ public class LoanRepository {
             while (rs.next()) {
                 loans.add(new Loan(
                         rs.getInt("id"),
-                        null, // book fylls på i service
-                        null, // member fylls på i service
+                        rs.getInt("book_id"),   // nytt
+                        rs.getInt("member_id"), // nytt
+                        null,
+                        null,
                         rs.getDate("loan_date").toLocalDate(),
                         rs.getDate("due_date").toLocalDate(),
-                        rs.getDate("return_date") != null
-                                ? rs.getDate("return_date").toLocalDate()
-                                : null
+                        null
                 ));
             }
         } catch (SQLException e) {
@@ -57,5 +57,34 @@ public class LoanRepository {
         } catch (SQLException e) {
             System.err.println("Fel vid sparande av lån: " + e.getMessage());
         }
+    }
+
+    public List<Loan> findAllActive() {
+        List<Loan> loans = new ArrayList<>();
+        String sql = """
+            SELECT id, book_id, member_id, loan_date, due_date, return_date
+            FROM loans
+            WHERE return_date IS NULL
+            """;
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                loans.add(new Loan(
+                        rs.getInt("id"),
+                        rs.getInt("book_id"),   // nytt
+                        rs.getInt("member_id"), // nytt
+                        null,
+                        null,
+                        rs.getDate("loan_date").toLocalDate(),
+                        rs.getDate("due_date").toLocalDate(),
+                        null
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Fel vid hämtning av aktiva lån: " + e.getMessage());
+        }
+        return loans;
     }
 }
