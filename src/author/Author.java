@@ -31,4 +31,8 @@ public class Author {
     public String getBiography() { return biography; }
     public String getWebsite() { return website; }
     public String getFullName() { return firstName + " " + lastName; }
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
+    }
 }

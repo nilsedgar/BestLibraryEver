@@ -29,10 +29,12 @@ public class LoanService {
 
         Loan loan = new Loan(
                 0,
+                book.getId(),
+                member.getId(),
                 book,
                 member,
                 LocalDate.now(),
-                LocalDate.now().plusWeeks(2), // standardlånetid 2 veckor
+                LocalDate.now().plusWeeks(2),
                 null
         );
 

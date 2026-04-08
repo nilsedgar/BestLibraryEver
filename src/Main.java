@@ -1,5 +1,9 @@
+import book.BookController;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        BookController bookController = new BookController();
+
+        bookController.showBookMenu();
     }
 }
