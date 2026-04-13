@@ -71,8 +71,18 @@ public class BookController {
         scanner.nextLine();
         System.out.print("Titel: ");
         String title = scanner.nextLine();
-        System.out.print("ISBN: ");
-        String isbn = scanner.nextLine();
+        String isbn = null;
+        boolean correctISBN = false;
+        while(!correctISBN) {
+            System.out.print("ISBN: ");
+            isbn = scanner.nextLine();
+            boolean valid = isbn.matches("^978-\\d-\\d{3}-\\d{5}-\\d$");
+            if (!valid) {
+                System.out.println("Incorrect IBSN format. Follow this pattern: 978-1-709-18907-3");
+            }else{
+                correctISBN = true;
+            }
+        }
         System.out.print("Utgivningsår: ");
         int year = scanner.nextInt();
         System.out.print("Antal exemplar: ");
